@@ -642,14 +642,14 @@
     
     <script>
         // ============================================
-        // Ember Dashboard - Live Data Integration
+        // Nova Dashboard - Live Data Integration
         // ============================================
         
         const CONFIG = {
             // GitHub repos to track
             repos: [
-                'jeremyspofford/ember',
-                'jeremyspofford/ember-dashboard',
+                'jeremyspofford/nova',
+                'jeremyspofford/nova-dashboard',
                 'jeremyspofford/moltbot-infra',
                 'jeremyspofford/portfolio',
                 'jeremyspofford/dotfiles'
@@ -950,7 +950,7 @@
         // Chat Manager (WebSocket)
         // ============================================
         
-        class EmberChat {
+        class NovaChat {
             constructor(dashboard) {
                 this.dashboard = dashboard;
                 this.ws = null;
@@ -980,8 +980,8 @@
             }
             
             init() {
-                const savedUrl = localStorage.getItem('ember_gateway_url');
-                const savedToken = localStorage.getItem('ember_gateway_token');
+                const savedUrl = localStorage.getItem('nova_gateway_url');
+                const savedToken = localStorage.getItem('nova_gateway_token');
                 if (savedUrl) this.elements.url.value = savedUrl;
                 if (savedToken) this.elements.token.value = savedToken;
                 
@@ -1033,8 +1033,8 @@
                     return;
                 }
                 
-                localStorage.setItem('ember_gateway_url', url);
-                if (token) localStorage.setItem('ember_gateway_token', token);
+                localStorage.setItem('nova_gateway_url', url);
+                if (token) localStorage.setItem('nova_gateway_token', token);
                 
                 this.connecting = true;
                 this.updateStatus('connecting');
@@ -1064,7 +1064,7 @@
                     minProtocol: 3,
                     maxProtocol: 3,
                     client: {
-                        id: 'ember-dashboard',
+                        id: 'nova-dashboard',
                         displayName: 'Nova Dashboard',
                         version: '0.3.0',
                         platform: navigator.platform,
@@ -1269,7 +1269,7 @@
         
         // Initialize
         const dashboard = new DashboardData();
-        const chat = new EmberChat(dashboard);
+        const chat = new NovaChat(dashboard);
     </script>
 </body>
 </html>
