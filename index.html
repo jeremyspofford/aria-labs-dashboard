@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/jpeg" href="nova-icon.jpg">
-    <title>Nova Dashboard ⭐</title>
+    <title>Nova Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Apply theme immediately to prevent flash
@@ -29,6 +29,7 @@
             --error: #cf222e;
             --border: #d0d7de;
             --shadow: rgba(31, 35, 40, 0.04);
+            --sidebar-width: 220px;
         }
         
         /* Dark theme */
@@ -53,46 +54,150 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            padding: 1.5rem;
             transition: background 0.2s, color 0.2s;
         }
         
-        .container { max-width: 1200px; margin: 0 auto; }
+        /* Layout with sidebar */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 1rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar-header img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .sidebar-header h1 {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+        
+        .sidebar-header .subtitle {
+            font-size: 0.6875rem;
+            color: var(--text-secondary);
+        }
+        
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .nav-section h3 {
+            font-size: 0.6875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding: 0 0.5rem;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 0.75rem;
+            border-radius: 6px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover {
+            background: var(--bg-tertiary);
+        }
+        
+        .nav-link.active {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .nav-link .icon {
+            width: 18px;
+            text-align: center;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+        }
+        
+        .sidebar-footer .btn {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        /* Mobile sidebar toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 101;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-size: 1.25rem;
+        }
+        
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+        
+        /* Main content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 1.5rem;
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; }
         
         header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 0;
+            padding: 0.5rem 0 1.5rem;
+            margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 2rem;
-            gap: 1rem;
         }
         
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-        
-        header h1 {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 1.375rem;
+        .header-title {
+            font-size: 1.25rem;
             font-weight: 600;
-        }
-        
-        header h1 img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-        }
-        
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 0.8125rem;
-            margin-top: 0.125rem;
         }
         
         .header-actions {
@@ -117,6 +222,16 @@
         }
         
         .btn:hover { background: var(--bg-tertiary); }
+        
+        .btn-primary {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
         
         .theme-toggle {
             width: 36px;
@@ -155,6 +270,7 @@
             color: inherit;
             transition: all 0.2s;
             box-shadow: 0 1px 3px var(--shadow);
+            cursor: pointer;
         }
         
         .app-card:hover {
@@ -223,6 +339,13 @@
             padding: 1rem;
             text-align: center;
             box-shadow: 0 1px 3px var(--shadow);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-1px);
         }
         
         .stat-card h4 {
@@ -258,6 +381,12 @@
             border-radius: 10px;
             padding: 1rem;
             box-shadow: 0 1px 3px var(--shadow);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .chart-card:hover {
+            border-color: var(--accent);
         }
         
         .chart-card h4 {
@@ -312,6 +441,13 @@
             margin-bottom: 0.5rem;
             font-size: 0.8125rem;
             line-height: 1.4;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        
+        .kanban-item:hover {
+            border-color: var(--accent);
+            transform: translateX(2px);
         }
         
         .kanban-item:last-child { margin-bottom: 0; }
@@ -350,6 +486,7 @@
             color: inherit;
             transition: all 0.15s;
             box-shadow: 0 1px 2px var(--shadow);
+            cursor: pointer;
         }
         
         .repo-card:hover { 
@@ -365,6 +502,148 @@
             gap: 0.375rem;
         }
         
+        /* Quick Actions */
+        .quick-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        
+        .quick-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .quick-action:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--accent);
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalIn 0.2s ease;
+        }
+        
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .modal-header h2 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 0.25rem;
+            line-height: 1;
+        }
+        
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .modal-body .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+        
+        .modal-body .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .modal-body .detail-label {
+            color: var(--text-secondary);
+        }
+        
+        .modal-body .detail-value {
+            font-weight: 500;
+        }
+        
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+        
+        /* Status indicator */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.375rem;
+        }
+        
+        .status-dot.online { background: var(--success); }
+        .status-dot.offline { background: var(--error); }
+        
         /* Footer */
         footer {
             text-align: center;
@@ -379,20 +658,31 @@
         .error { color: var(--error); }
         
         /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .sidebar-toggle {
+                display: block;
+            }
+            
+            .sidebar-overlay.active {
+                display: block;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+                padding-top: 4rem;
+            }
+        }
+        
         @media (max-width: 768px) {
-            body { padding: 1rem; }
-            
-            header { 
-                flex-direction: column; 
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .header-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
             .section { margin-bottom: 2rem; }
             .section-header { font-size: 0.9375rem; margin-bottom: 1rem; }
             
@@ -401,10 +691,7 @@
                 gap: 0.875rem;
             }
             
-            .app-card { 
-                padding: 1rem; 
-            }
-            
+            .app-card { padding: 1rem; }
             .app-card h3 { font-size: 0.9375rem; }
             .app-card p { font-size: 0.8125rem; }
             
@@ -441,116 +728,226 @@
             
             .repo-card { padding: 0.75rem; }
             .repo-card h4 { font-size: 0.8125rem; }
+            
+            .quick-actions {
+                flex-direction: column;
+            }
+            
+            .modal {
+                margin: 0.5rem;
+                max-height: 90vh;
+            }
         }
         
         @media (max-width: 480px) {
-            body { padding: 0.75rem; }
-            
-            header h1 { font-size: 1.125rem; }
-            header h1 img { width: 32px; height: 32px; }
-            .subtitle { font-size: 0.75rem; }
-            
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            
             .repos-grid { grid-template-columns: 1fr; }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-left">
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <img src="nova-icon.jpg" alt="Nova">
                 <div>
-                    <h1>
-                        <img src="nova-icon.jpg" alt="Nova">
-                        Nova Dashboard
-                    </h1>
-                    <p class="subtitle">Aria Labs Command Center</p>
+                    <h1>Nova</h1>
+                    <p class="subtitle">Aria Labs</p>
                 </div>
             </div>
-            <div class="header-actions">
-                <button class="btn" onclick="loadAll()">↻ Refresh</button>
-                <button class="btn theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">
-                    🌙
+            
+            <nav>
+                <div class="nav-section">
+                    <h3>Navigation</h3>
+                    <a href="#apps" class="nav-link active" data-section="apps">
+                        <span class="icon">🚀</span> Apps & Projects
+                    </a>
+                    <a href="#tasks" class="nav-link" data-section="tasks">
+                        <span class="icon">📋</span> Task Board
+                    </a>
+                    <a href="#metrics" class="nav-link" data-section="metrics">
+                        <span class="icon">📈</span> Nova Metrics
+                    </a>
+                    <a href="#repos" class="nav-link" data-section="repos">
+                        <span class="icon">📁</span> Repositories
+                    </a>
+                </div>
+                
+                <div class="nav-section">
+                    <h3>External Links</h3>
+                    <a href="https://github.com/jeremyspofford" target="_blank" class="nav-link">
+                        <span class="icon">🐙</span> GitHub
+                    </a>
+                    <a href="https://arialabs.ai" target="_blank" class="nav-link">
+                        <span class="icon">🌐</span> Aria Labs
+                    </a>
+                    <a href="https://jeremyspofford.dev" target="_blank" class="nav-link">
+                        <span class="icon">👤</span> Portfolio
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn" onclick="toggleTheme()" id="theme-btn-sidebar">
+                    🌙 Dark Mode
                 </button>
             </div>
-        </header>
+        </aside>
         
-        <!-- Apps Section -->
-        <section class="section">
-            <h2 class="section-header">🚀 Apps & Projects</h2>
-            <div class="apps-grid">
-                <a href="https://accountability-dashboard-8ll.pages.dev" target="_blank" class="app-card">
-                    <h3>📊 Accountability Dashboard <span class="status live">LIVE</span></h3>
-                    <p>Track what politicians say vs what they do. 538 Congress members with real data.</p>
-                    <div class="links">
-                        <a href="https://github.com/jeremyspofford/accountability-dashboard">GitHub</a>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <header>
+                    <h2 class="header-title" id="page-title">Dashboard Overview</h2>
+                    <div class="header-actions">
+                        <button class="btn" onclick="loadAll()">↻ Refresh</button>
+                        <button class="btn theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle theme">
+                            🌙
+                        </button>
                     </div>
-                </a>
-                <a href="https://suppr.pages.dev" target="_blank" class="app-card">
-                    <h3>🍽️ Suppr <span class="status live">LIVE</span></h3>
-                    <p>Social dining app. Host meals, find dinner companions.</p>
-                    <div class="links">
-                        <a href="https://github.com/jeremyspofford/suppr">GitHub</a>
+                </header>
+                
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <a href="https://github.com/jeremyspofford?tab=repositories" target="_blank" class="quick-action">
+                        ➕ New Repo
+                    </a>
+                    <a href="https://dash.cloudflare.com" target="_blank" class="quick-action">
+                        ☁️ Cloudflare
+                    </a>
+                    <a href="https://supabase.com/dashboard" target="_blank" class="quick-action">
+                        🗄️ Supabase
+                    </a>
+                    <span class="quick-action" onclick="showSystemStatus()">
+                        <span class="status-dot online"></span> System Status
+                    </span>
+                </div>
+                
+                <!-- Apps Section -->
+                <section class="section" id="apps">
+                    <h2 class="section-header">🚀 Apps & Projects</h2>
+                    <div class="apps-grid" id="apps-grid">
+                        <div class="app-card" onclick="showAppModal('nova')">
+                            <h3>⭐ Nova <span class="status live">LIVE</span></h3>
+                            <p>AI assistant powering Aria Labs. Persistent memory, multi-channel, proactive.</p>
+                            <div class="links">
+                                <a href="https://github.com/jeremyspofford/nova" target="_blank" onclick="event.stopPropagation()">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="app-card" onclick="showAppModal('accountability')">
+                            <h3>📊 Accountability Dashboard <span class="status live">LIVE</span></h3>
+                            <p>Track what politicians say vs what they do. 538 Congress members with real data.</p>
+                            <div class="links">
+                                <a href="https://accountability-dashboard-8ll.pages.dev" target="_blank" onclick="event.stopPropagation()">Live Site</a>
+                                <a href="https://github.com/jeremyspofford/accountability-dashboard" target="_blank" onclick="event.stopPropagation()">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="app-card" onclick="showAppModal('suppr')">
+                            <h3>🍽️ Suppr <span class="status live">LIVE</span></h3>
+                            <p>Social dining app. Host meals, find dinner companions.</p>
+                            <div class="links">
+                                <a href="https://suppr.pages.dev" target="_blank" onclick="event.stopPropagation()">Live Site</a>
+                                <a href="https://github.com/jeremyspofford/suppr" target="_blank" onclick="event.stopPropagation()">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="app-card" onclick="showAppModal('portfolio')">
+                            <h3>👤 Portfolio <span class="status live">LIVE</span></h3>
+                            <p>Jeremy's professional portfolio site.</p>
+                            <div class="links">
+                                <a href="https://jeremyspofford.dev" target="_blank" onclick="event.stopPropagation()">Live Site</a>
+                                <a href="https://github.com/jeremyspofford/portfolio" target="_blank" onclick="event.stopPropagation()">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="app-card" style="opacity: 0.7" onclick="showAppModal('mercury')">
+                            <h3>📧 Mercury <span class="status dev">DEV</span></h3>
+                            <p>Email management CLI. Pending Gmail OAuth setup.</p>
+                            <div class="links">
+                                <a href="https://github.com/jeremyspofford/nova" target="_blank" onclick="event.stopPropagation()">GitHub (Nova)</a>
+                            </div>
+                        </div>
+                        <div class="app-card" style="opacity: 0.7" onclick="showAppModal('dashboard')">
+                            <h3>📱 Nova Dashboard <span class="status live">LIVE</span></h3>
+                            <p>This dashboard! Monitoring and control center for Aria Labs projects.</p>
+                            <div class="links">
+                                <a href="https://github.com/jeremyspofford/nova-dashboard" target="_blank" onclick="event.stopPropagation()">GitHub</a>
+                            </div>
+                        </div>
                     </div>
-                </a>
-                <a href="https://jeremyspofford.dev" target="_blank" class="app-card">
-                    <h3>👤 Portfolio <span class="status live">LIVE</span></h3>
-                    <p>Jeremy's professional portfolio site.</p>
-                    <div class="links">
-                        <a href="https://github.com/jeremyspofford/portfolio">GitHub</a>
+                </section>
+                
+                <!-- Kanban Section -->
+                <section class="section" id="tasks">
+                    <h2 class="section-header">📋 Task Board</h2>
+                    <div class="kanban-grid" id="kanban-grid">
+                        <div class="kanban-column">
+                            <h4>🔴 In Progress <span class="count" id="inprogress-count">0</span></h4>
+                            <div id="inprogress-items"></div>
+                        </div>
+                        <div class="kanban-column">
+                            <h4>🟡 Up Next <span class="count" id="upnext-count">0</span></h4>
+                            <div id="upnext-items"></div>
+                        </div>
+                        <div class="kanban-column">
+                            <h4>🟢 Done Today <span class="count" id="done-count">0</span></h4>
+                            <div id="done-items"></div>
+                        </div>
                     </div>
-                </a>
-                <div class="app-card" style="opacity: 0.6">
-                    <h3>📧 Mercury <span class="status dev">DEV</span></h3>
-                    <p>Email management CLI. Pending Gmail OAuth setup.</p>
-                    <div class="links">
-                        <a href="https://github.com/jeremyspofford/nova">GitHub (Nova)</a>
+                </section>
+                
+                <!-- Monitoring Section -->
+                <section class="section" id="metrics">
+                    <h2 class="section-header">📈 Nova Metrics</h2>
+                    <div id="metrics-loading" class="loading">Loading metrics...</div>
+                    <div id="metrics-content" style="display: none;">
+                        <div class="stats-grid" id="stats-grid"></div>
+                        <div class="charts-row" id="charts-row" style="margin-top: 1rem;"></div>
                     </div>
-                </div>
+                </section>
+                
+                <!-- Repos Section -->
+                <section class="section" id="repos">
+                    <h2 class="section-header">📁 Repositories</h2>
+                    <div class="repos-grid" id="repos-grid">
+                        <div class="loading">Loading repos...</div>
+                    </div>
+                </section>
+                
+                <footer>
+                    <div id="footer-status">Loading...</div>
+                </footer>
             </div>
-        </section>
-        
-        <!-- Kanban Section -->
-        <section class="section">
-            <h2 class="section-header">📋 Task Board</h2>
-            <div class="kanban-grid" id="kanban-grid">
-                <div class="kanban-column">
-                    <h4>🔴 In Progress <span class="count" id="inprogress-count">0</span></h4>
-                    <div id="inprogress-items"></div>
-                </div>
-                <div class="kanban-column">
-                    <h4>🟡 Up Next <span class="count" id="upnext-count">0</span></h4>
-                    <div id="upnext-items"></div>
-                </div>
-                <div class="kanban-column">
-                    <h4>🟢 Done Today <span class="count" id="done-count">0</span></h4>
-                    <div id="done-items"></div>
-                </div>
+        </main>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 id="modal-title">Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
             </div>
-        </section>
-        
-        <!-- Monitoring Section -->
-        <section class="section">
-            <h2 class="section-header">📈 Nova Monitoring</h2>
-            <div id="metrics-loading" class="loading">Loading metrics...</div>
-            <div id="metrics-content" style="display: none;">
-                <div class="stats-grid" id="stats-grid"></div>
-                <div class="charts-row" id="charts-row" style="margin-top: 1rem;"></div>
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamic content -->
             </div>
-        </section>
-        
-        <!-- Repos Section -->
-        <section class="section">
-            <h2 class="section-header">📁 Repositories</h2>
-            <div class="repos-grid" id="repos-grid">
-                <div class="loading">Loading repos...</div>
+            <div class="modal-footer" id="modal-footer">
+                <button class="btn" onclick="closeModal()">Close</button>
             </div>
-        </section>
-        
-        <footer>
-            <div id="footer-status">Loading...</div>
-        </footer>
+        </div>
     </div>
     
     <script>
@@ -560,6 +957,61 @@
             'nova', 'nova-dashboard', 'accountability-dashboard', 'suppr', 
             'portfolio', 'dotfiles', 'automations'
         ];
+        
+        // App data for modals
+        const APP_DATA = {
+            nova: {
+                title: '⭐ Nova',
+                description: 'AI assistant powering Aria Labs. Features persistent memory, multi-channel support (Telegram, Discord), proactive heartbeat system, and tool integrations.',
+                status: 'Live',
+                tech: 'TypeScript, OpenClaw, Claude API',
+                repo: 'https://github.com/jeremyspofford/nova',
+                features: ['Persistent memory across sessions', 'Multi-channel messaging', 'Proactive heartbeats', 'Tool integrations', 'Cron job scheduling']
+            },
+            accountability: {
+                title: '📊 Accountability Dashboard',
+                description: 'Track what politicians say vs what they do. Real data from Congress.gov API covering all 538 Congress members.',
+                status: 'Live',
+                url: 'https://accountability-dashboard-8ll.pages.dev',
+                tech: 'Next.js, Tailwind CSS, Congress.gov API',
+                repo: 'https://github.com/jeremyspofford/accountability-dashboard',
+                features: ['Real Congress.gov data', 'Bill tracking', 'Voting records', 'Member profiles']
+            },
+            suppr: {
+                title: '🍽️ Suppr',
+                description: 'Social dining app where you can host meals or find dinner companions. MVP deployed with core features.',
+                status: 'Live',
+                url: 'https://suppr.pages.dev',
+                tech: 'Next.js, Supabase, Tailwind CSS',
+                repo: 'https://github.com/jeremyspofford/suppr',
+                features: ['Host dinner events', 'Find local meals', 'User profiles', 'RSVP system']
+            },
+            portfolio: {
+                title: '👤 Portfolio',
+                description: 'Jeremy\'s professional portfolio showcasing projects and experience.',
+                status: 'Live',
+                url: 'https://jeremyspofford.dev',
+                tech: 'Next.js, Tailwind CSS',
+                repo: 'https://github.com/jeremyspofford/portfolio',
+                features: ['Project showcase', 'Experience timeline', 'Contact form', 'SEO optimized']
+            },
+            mercury: {
+                title: '📧 Mercury',
+                description: 'Email management CLI for inbox zero. Currently in development, pending Gmail OAuth setup.',
+                status: 'Development',
+                tech: 'TypeScript, Gmail API',
+                repo: 'https://github.com/jeremyspofford/nova',
+                features: ['Inbox triage', 'Smart categorization', 'Quick actions', 'CLI interface']
+            },
+            dashboard: {
+                title: '📱 Nova Dashboard',
+                description: 'Monitoring and control center for all Aria Labs projects. You\'re looking at it!',
+                status: 'Live',
+                tech: 'HTML, CSS, JavaScript, Chart.js',
+                repo: 'https://github.com/jeremyspofford/nova-dashboard',
+                features: ['Project overview', 'Task board', 'Usage metrics', 'Real-time updates']
+            }
+        };
         
         // Theme management
         function getTheme() {
@@ -577,8 +1029,141 @@
         }
         
         function updateThemeButton() {
-            const btn = document.getElementById('theme-btn');
-            btn.textContent = getTheme() === 'dark' ? '☀️' : '🌙';
+            const isDark = getTheme() === 'dark';
+            document.getElementById('theme-btn').textContent = isDark ? '☀️' : '🌙';
+            document.getElementById('theme-btn-sidebar').textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+        }
+        
+        // Sidebar toggle for mobile
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.querySelector('.sidebar-overlay').classList.toggle('active');
+        }
+        
+        // Navigation
+        document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = link.dataset.section;
+                
+                // Update active state
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Scroll to section
+                document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+                
+                // Close mobile sidebar
+                if (window.innerWidth <= 900) {
+                    toggleSidebar();
+                }
+            });
+        });
+        
+        // Modal functions
+        function showModal(title, content, footer = '') {
+            document.getElementById('modal-title').innerHTML = title;
+            document.getElementById('modal-body').innerHTML = content;
+            document.getElementById('modal-footer').innerHTML = footer || '<button class="btn" onclick="closeModal()">Close</button>';
+            document.getElementById('modal-overlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(e) {
+            if (e && e.target !== e.currentTarget) return;
+            document.getElementById('modal-overlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+        
+        function showAppModal(appId) {
+            const app = APP_DATA[appId];
+            if (!app) return;
+            
+            const features = app.features ? app.features.map(f => `<li>${f}</li>`).join('') : '';
+            
+            const content = `
+                <p>${app.description}</p>
+                <div class="detail-row">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value">${app.status}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Tech Stack</span>
+                    <span class="detail-value">${app.tech}</span>
+                </div>
+                ${features ? `
+                <div style="margin-top: 1rem;">
+                    <strong style="font-size: 0.875rem;">Features</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.875rem;">
+                        ${features}
+                    </ul>
+                </div>
+                ` : ''}
+            `;
+            
+            const footer = `
+                ${app.url ? `<a href="${app.url}" target="_blank" class="btn btn-primary">Visit Site</a>` : ''}
+                <a href="${app.repo}" target="_blank" class="btn">View Code</a>
+                <button class="btn" onclick="closeModal()">Close</button>
+            `;
+            
+            showModal(app.title, content, footer);
+        }
+        
+        function showTaskModal(task) {
+            const content = `
+                <p>${task.task}</p>
+                <div class="detail-row">
+                    <span class="detail-label">Priority</span>
+                    <span class="detail-value priority-${task.priority}">${task.priority}</span>
+                </div>
+                ${task.started ? `
+                <div class="detail-row">
+                    <span class="detail-label">Started</span>
+                    <span class="detail-value">${task.started}</span>
+                </div>
+                ` : ''}
+                ${task.outcome ? `
+                <div class="detail-row">
+                    <span class="detail-label">Outcome</span>
+                    <span class="detail-value">${task.outcome}</span>
+                </div>
+                ` : ''}
+            `;
+            
+            showModal('📋 Task Details', content);
+        }
+        
+        function showSystemStatus() {
+            const content = `
+                <div class="detail-row">
+                    <span class="detail-label">Gateway</span>
+                    <span class="detail-value"><span class="status-dot online"></span>Online</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Host</span>
+                    <span class="detail-value">Raspberry Pi 4</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Uptime</span>
+                    <span class="detail-value">—</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Active Sessions</span>
+                    <span class="detail-value" id="active-sessions">Loading...</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Last Heartbeat</span>
+                    <span class="detail-value">Recent</span>
+                </div>
+            `;
+            
+            showModal('🖥️ System Status', content);
         }
         
         // Listen for system theme changes
@@ -622,17 +1207,17 @@
                     : 100;
                 
                 document.getElementById('stats-grid').innerHTML = `
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showMetricModal('messages', ${JSON.stringify(m.messages).replace(/"/g, '&quot;')})">
                         <h4>Messages</h4>
                         <div class="value">${formatNumber(m.messages.total)}</div>
                         <div class="subtext">${m.messages.user} prompts</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showMetricModal('tokens', ${JSON.stringify(m.tokens).replace(/"/g, '&quot;')})">
                         <h4>Tokens</h4>
                         <div class="value">${formatNumber(m.tokens.total)}</div>
                         <div class="subtext">${formatNumber(m.tokens.output)} output</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showMetricModal('cost', ${JSON.stringify(m.cost).replace(/"/g, '&quot;')})">
                         <h4>Cost (7d)</h4>
                         <div class="value">${formatCost(m.cost.total)}</div>
                         <div class="subtext">${Object.keys(m.cost.byDay).length} days</div>
@@ -642,7 +1227,7 @@
                         <div class="value" style="color: var(--success)">${successRate}%</div>
                         <div class="subtext">${m.messages.errors} errors</div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="showMetricModal('latency', ${JSON.stringify(m.latency).replace(/"/g, '&quot;')})">
                         <h4>Avg Latency</h4>
                         <div class="value">${formatMs(m.latency.avgMs)}</div>
                         <div class="subtext">P95: ${formatMs(m.latency.p95Ms)}</div>
@@ -673,6 +1258,53 @@
             } catch (err) {
                 loadingEl.innerHTML = `<span class="error">Failed to load metrics: ${err.message}</span>`;
             }
+        }
+        
+        function showMetricModal(type, data) {
+            let title, content;
+            
+            switch(type) {
+                case 'messages':
+                    title = '💬 Message Statistics';
+                    content = `
+                        <div class="detail-row"><span class="detail-label">Total Messages</span><span class="detail-value">${formatNumber(data.total)}</span></div>
+                        <div class="detail-row"><span class="detail-label">User Prompts</span><span class="detail-value">${data.user}</span></div>
+                        <div class="detail-row"><span class="detail-label">Assistant Responses</span><span class="detail-value">${data.assistant}</span></div>
+                        <div class="detail-row"><span class="detail-label">Errors</span><span class="detail-value">${data.errors}</span></div>
+                    `;
+                    break;
+                case 'tokens':
+                    title = '🔢 Token Usage';
+                    content = `
+                        <div class="detail-row"><span class="detail-label">Total Tokens</span><span class="detail-value">${formatNumber(data.total)}</span></div>
+                        <div class="detail-row"><span class="detail-label">Input Tokens</span><span class="detail-value">${formatNumber(data.input)}</span></div>
+                        <div class="detail-row"><span class="detail-label">Output Tokens</span><span class="detail-value">${formatNumber(data.output)}</span></div>
+                        <div class="detail-row"><span class="detail-label">Cache Read</span><span class="detail-value">${formatNumber(data.cacheRead || 0)}</span></div>
+                    `;
+                    break;
+                case 'cost':
+                    title = '💰 Cost Breakdown';
+                    const days = Object.entries(data.byDay).sort((a,b) => b[0].localeCompare(a[0]));
+                    content = `
+                        <div class="detail-row"><span class="detail-label">Total (7 days)</span><span class="detail-value">${formatCost(data.total)}</span></div>
+                        <div style="margin-top: 1rem;"><strong>By Day</strong></div>
+                        ${days.map(([day, cost]) => `
+                            <div class="detail-row"><span class="detail-label">${day}</span><span class="detail-value">${formatCost(cost)}</span></div>
+                        `).join('')}
+                    `;
+                    break;
+                case 'latency':
+                    title = '⚡ Latency Statistics';
+                    content = `
+                        <div class="detail-row"><span class="detail-label">Average</span><span class="detail-value">${formatMs(data.avgMs)}</span></div>
+                        <div class="detail-row"><span class="detail-label">P50 (Median)</span><span class="detail-value">${formatMs(data.p50Ms)}</span></div>
+                        <div class="detail-row"><span class="detail-label">P95</span><span class="detail-value">${formatMs(data.p95Ms)}</span></div>
+                        <div class="detail-row"><span class="detail-label">P99</span><span class="detail-value">${formatMs(data.p99Ms)}</span></div>
+                    `;
+                    break;
+            }
+            
+            showModal(title, content);
         }
         
         function renderCharts(m) {
@@ -740,16 +1372,20 @@
             }
         }
         
+        // Store kanban data globally for modal access
+        let kanbanData = null;
+        
         async function loadKanban() {
             try {
                 const res = await fetch(KANBAN_URL + '?t=' + Date.now());
-                const k = await res.json();
+                kanbanData = await res.json();
+                const k = kanbanData;
                 
                 // In Progress
                 document.getElementById('inprogress-count').textContent = k.inProgress.length;
                 document.getElementById('inprogress-items').innerHTML = k.inProgress.length 
-                    ? k.inProgress.map(t => `
-                        <div class="kanban-item in-progress">
+                    ? k.inProgress.map((t, i) => `
+                        <div class="kanban-item in-progress" onclick='showTaskModal(${JSON.stringify(t).replace(/'/g, "\\'")})'>
                             ${t.task}
                             <div class="meta">Started ${t.started || 'now'}</div>
                         </div>
@@ -758,8 +1394,8 @@
                 
                 // Up Next
                 document.getElementById('upnext-count').textContent = k.upNext.length;
-                document.getElementById('upnext-items').innerHTML = k.upNext.slice(0, 5).map(t => `
-                    <div class="kanban-item">
+                document.getElementById('upnext-items').innerHTML = k.upNext.slice(0, 5).map((t, i) => `
+                    <div class="kanban-item" onclick='showTaskModal(${JSON.stringify(t).replace(/'/g, "\\'")})'>
                         ${t.task}
                         <div class="meta"><span class="priority-${t.priority}">${t.priority}</span></div>
                     </div>
@@ -767,8 +1403,8 @@
                 
                 // Done Today
                 document.getElementById('done-count').textContent = k.doneToday.length;
-                document.getElementById('done-items').innerHTML = k.doneToday.slice(0, 5).map(t => `
-                    <div class="kanban-item done">
+                document.getElementById('done-items').innerHTML = k.doneToday.slice(0, 5).map((t, i) => `
+                    <div class="kanban-item done" onclick='showTaskModal(${JSON.stringify(t).replace(/'/g, "\\'")})'>
                         ${t.task}
                         <div class="meta">✓ ${t.outcome}</div>
                     </div>
