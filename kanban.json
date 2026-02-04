@@ -1,7 +1,6 @@
 {
   "inProgress": [],
   "upNext": [
-    { "task": "Update dashboard repos list dynamically from GitHub API", "priority": "normal" },
     { "task": "Add README badges to all active repos", "priority": "low" },
     { "task": "[JEREMY] Update arialabs.ai nameservers to Cloudflare (in Namecheap)", "priority": "high" },
     { "task": "[JEREMY] Set up Google Cloud project + OAuth creds for Mercury", "priority": "normal" },
@@ -20,6 +19,7 @@
     { "task": "Voting record charts", "outcome": "Already complete with 35 tests passing" },
     { "task": "Repo cleanup", "outcome": "Archived 11 stale repos (27→13 active)" },
     { "task": "Mercury Gmail OAuth code", "outcome": "Already complete, needs Google Cloud creds" },
-    { "task": "Mercury tests + CI", "outcome": "Added LLM & Gmail tests, CI runs on Python 3.11-3.13" }
+    { "task": "Mercury tests + CI", "outcome": "Added LLM & Gmail tests, CI runs on Python 3.11-3.13" },
+    { "task": "Dynamic repos on dashboard", "outcome": "Fetches from GitHub API, shows descriptions" }
   ]
 }
