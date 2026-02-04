@@ -1,14 +1,19 @@
 {
   "inProgress": [],
   "upNext": [
+    { "task": "Add tests to Mercury", "priority": "normal" },
+    { "task": "Add CI/CD workflow to Mercury", "priority": "normal" },
+    { "task": "Update dashboard repos list dynamically from GitHub API", "priority": "normal" },
+    { "task": "Add README badges to all active repos", "priority": "low" },
     { "task": "[JEREMY] Update arialabs.ai nameservers to Cloudflare (in Namecheap)", "priority": "high" },
-    { "task": "[JEREMY] Set up Google Cloud project + OAuth creds for Mercury", "priority": "normal" }
+    { "task": "[JEREMY] Set up Google Cloud project + OAuth creds for Mercury", "priority": "normal" },
+    { "task": "[JEREMY] Sign up for FEC API key at api.data.gov", "priority": "low" }
   ],
   "blocked": [
-    { "task": "Nova Voice App", "blocker": "SPEC REVIEW — PWA with voice input, TTS, subagent panel. 4-7 day MVP. See specs/nova-voice-app.md" },
-    { "task": "Get FEC API key", "blocker": "Sign up at api.data.gov" },
-    { "task": "Set up dashboard.arialabs.ai custom domain", "blocker": "Waiting for arialabs.ai nameservers to point to Cloudflare" },
-    { "task": "Set up Ollama on Dell", "blocker": "Need Dell access" }
+    { "task": "Nova Voice App", "blocker": "SPEC REVIEW — awaiting Jeremy's decision" },
+    { "task": "Set up dashboard.arialabs.ai custom domain", "blocker": "Waiting for NS update" },
+    { "task": "Set up Ollama on Dell", "blocker": "Need Dell access" },
+    { "task": "Add campaign finance data to accountability dashboard", "blocker": "Need FEC API key" }
   ],
   "doneToday": [
     { "task": "Dashboard sidebar + modals", "outcome": "Navigation, floating modals, Nova project added" },
