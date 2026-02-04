@@ -1,34 +1,21 @@
 {
-  "lastUpdated": "2026-02-03T19:22:00-05:00",
   "inProgress": [],
   "upNext": [
-    {"task": "Get FEC API key from api.data.gov", "priority": "high", "added": "2026-02-03"},
-    {"task": "Write tests for accountability dashboard", "priority": "normal", "added": "2026-02-03"}
+    { "task": "Add voting record charts to rep pages", "priority": "normal" },
+    { "task": "Write Mercury Gmail OAuth", "priority": "normal" }
+  ],
+  "blocked": [
+    { "task": "Get FEC API key", "blocker": "Sign up at api.data.gov" },
+    { "task": "Deploy nova-dashboard theme update", "blocker": "Need CF API token or connect repo in dashboard" },
+    { "task": "Review 15 repos for cleanup", "blocker": "See memory/repo-audit.md" },
+    { "task": "Set up dashboard.arialabs.ai", "blocker": "NS propagation" },
+    { "task": "Set up Ollama on Dell", "blocker": "Need Dell access" }
   ],
   "doneToday": [
-    {"task": "Add ZIP code search", "completed": "2026-02-03T19:37:00", "outcome": "Find reps by ZIP on home page"},
-    {"task": "Add filters to congress page", "completed": "2026-02-03T19:30:00", "outcome": "Chamber, party, state, search all work"},
-    {"task": "Integrate FEC API for campaign finance", "completed": "2026-02-03T19:27:00", "outcome": "Code ready, needs FEC_API_KEY"},
-    {"task": "Research OpenSecrets API", "completed": "2026-02-03T19:24:00", "outcome": "DISCONTINUED - Use FEC API"},
-    {"task": "Integrate Voteview for party alignment", "completed": "2026-02-03T19:22:00", "outcome": "537/538 members with real voting data"},
-    {"task": "Research ProPublica Congress API", "completed": "2026-02-03T19:17:00", "outcome": "DISCONTINUED - Use Voteview instead"},
-    {"task": "Fix bills_sponsored in accountability dashboard", "completed": "2026-02-03T19:18:00", "outcome": "Real data from Congress.gov API"},
-    {"task": "Create kanban system", "completed": "2026-02-03T19:12:00", "outcome": "Task tracking active"},
-    {"task": "Mobile responsive fix", "completed": "2026-02-03T19:10:00", "outcome": "Dashboard works on mobile"},
-    {"task": "Deploy dashboard to Cloudflare", "completed": "2026-02-03T19:01:00", "outcome": "nova-dashboard-9ew.pages.dev"},
-    {"task": "Set up hourly metrics cron", "completed": "2026-02-03T18:50:00", "outcome": "Running"},
-    {"task": "Create monitoring dashboard", "completed": "2026-02-03T18:50:00", "outcome": "Unified with apps"},
-    {"task": "Build metrics aggregation script", "completed": "2026-02-03T18:46:00", "outcome": "Working, parses sessions"},
-    {"task": "Update dashboard branding", "completed": "2026-02-03T18:40:00", "outcome": "Nova icons + references"},
-    {"task": "Rename ember repos to nova", "completed": "2026-02-03T18:38:00", "outcome": "Both repos renamed"}
-  ],
-  "backlog": [
-    {"task": "Explore FEC API", "category": "research"},
-    {"task": "Research Google Civic API", "category": "research"},
-    {"task": "Set up dashboard.arialabs.ai", "category": "infra"},
-    {"task": "Add voting record charts to rep pages", "category": "feature"},
-    {"task": "Add campaign finance to rep pages", "category": "feature"},
-    {"task": "Write Mercury Gmail OAuth", "category": "feature"},
-    {"task": "Set up Ollama on Dell", "category": "infra"}
+    { "task": "Audit all repos", "outcome": "10 keep, 15 review, 2 evaluate" },
+    { "task": "Theme system + mobile fix", "outcome": "Light/dark toggle (pending deploy)" },
+    { "task": "Write tests for accountability dashboard", "outcome": "Vitest + 25 tests" },
+    { "task": "Add ZIP code search", "outcome": "Find reps by ZIP" },
+    { "task": "Add filters to congress page", "outcome": "Chamber, party, state, search" }
   ]
 }
