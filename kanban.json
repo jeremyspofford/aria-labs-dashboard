@@ -1,8 +1,8 @@
 {
   "inProgress": [],
   "upNext": [
-    { "task": "Write Mercury Gmail OAuth", "priority": "normal" },
-    { "task": "[JEREMY] Update arialabs.ai nameservers to Cloudflare (in Namecheap)", "priority": "high" }
+    { "task": "[JEREMY] Update arialabs.ai nameservers to Cloudflare (in Namecheap)", "priority": "high" },
+    { "task": "[JEREMY] Set up Google Cloud project + OAuth creds for Mercury", "priority": "normal" }
   ],
   "blocked": [
     { "task": "Nova Voice App", "blocker": "SPEC REVIEW — PWA with voice input, TTS, subagent panel. 4-7 day MVP. See specs/nova-voice-app.md" },
@@ -15,6 +15,7 @@
     { "task": "Cloudflare Pages deploy for dashboard", "outcome": "Auto-deploys via GitHub Actions" },
     { "task": "1Password + Cloudflare integration", "outcome": "Autonomous access to secrets & DNS" },
     { "task": "Voting record charts", "outcome": "Already complete with 35 tests passing" },
-    { "task": "Repo cleanup", "outcome": "Archived 11 stale repos (27→13 active)" }
+    { "task": "Repo cleanup", "outcome": "Archived 11 stale repos (27→13 active)" },
+    { "task": "Mercury Gmail OAuth code", "outcome": "Already complete, needs Google Cloud creds" }
   ]
 }
