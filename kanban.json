@@ -3,11 +3,11 @@
   "inProgress": [],
   "upNext": [
     {"task": "Get FEC API key from api.data.gov", "priority": "high", "added": "2026-02-03"},
-    {"task": "Add state filter to accountability dashboard", "priority": "normal", "added": "2026-02-03"},
     {"task": "Add ZIP code search to accountability dashboard", "priority": "normal", "added": "2026-02-03"},
     {"task": "Write tests for accountability dashboard", "priority": "normal", "added": "2026-02-03"}
   ],
   "doneToday": [
+    {"task": "Add filters to congress page", "completed": "2026-02-03T19:30:00", "outcome": "Chamber, party, state, search all work"},
     {"task": "Integrate FEC API for campaign finance", "completed": "2026-02-03T19:27:00", "outcome": "Code ready, needs FEC_API_KEY"},
     {"task": "Research OpenSecrets API", "completed": "2026-02-03T19:24:00", "outcome": "DISCONTINUED - Use FEC API"},
     {"task": "Integrate Voteview for party alignment", "completed": "2026-02-03T19:22:00", "outcome": "537/538 members with real voting data"},
