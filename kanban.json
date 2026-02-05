@@ -1,25 +1,21 @@
 {
-  "inProgress": [],
+  "inProgress": [
+    { "task": "FaceDrill POC — Awaiting Jeremy review", "priority": "high" }
+  ],
   "upNext": [
-    { "task": "Add README badges to all active repos", "priority": "low" },
-    { "task": "[JEREMY] Update arialabs.ai nameservers to Cloudflare (in Namecheap)", "priority": "high" },
+    { "task": "[JEREMY] Review FaceDrill POC (5 min)", "priority": "high" },
+    { "task": "[JEREMY] Sign up for FEC API key at api.data.gov", "priority": "normal" },
     { "task": "[JEREMY] Set up Google Cloud project + OAuth creds for Mercury", "priority": "normal" },
-    { "task": "[JEREMY] Sign up for FEC API key at api.data.gov", "priority": "low" }
+    { "task": "Add README badges to all active repos", "priority": "low" }
   ],
   "blocked": [
     { "task": "Nova Voice App", "blocker": "SPEC REVIEW — awaiting Jeremy's decision" },
-    { "task": "Set up dashboard.arialabs.ai custom domain", "blocker": "Waiting for NS update" },
-    { "task": "Set up Ollama on Dell", "blocker": "Need Dell access" },
+    { "task": "Set up Ollama on Dell", "blocker": "Need Dell access / WoL fix" },
     { "task": "Add campaign finance data to accountability dashboard", "blocker": "Need FEC API key" }
   ],
   "doneToday": [
-    { "task": "Dashboard sidebar + modals", "outcome": "Navigation, floating modals, Nova project added" },
-    { "task": "Cloudflare Pages deploy for dashboard", "outcome": "Auto-deploys via GitHub Actions" },
-    { "task": "1Password + Cloudflare integration", "outcome": "Autonomous access to secrets & DNS" },
-    { "task": "Voting record charts", "outcome": "Already complete with 35 tests passing" },
-    { "task": "Repo cleanup", "outcome": "Archived 11 stale repos (27→13 active)" },
-    { "task": "Mercury Gmail OAuth code", "outcome": "Already complete, needs Google Cloud creds" },
-    { "task": "Mercury tests + CI", "outcome": "Added LLM & Gmail tests, CI runs on Python 3.11-3.13" },
-    { "task": "Dynamic repos on dashboard", "outcome": "Fetches from GitHub API, shows descriptions" }
+    { "task": "FaceDrill POC deployed", "outcome": "Live at facedrill.arialabs.ai" },
+    { "task": "Add FaceDrill to dashboard", "outcome": "Visible on dashboard.arialabs.ai" },
+    { "task": "Migrate FaceDrill subdomain", "outcome": "facedrill.arialabs.ai (was .pages.dev)" }
   ]
 }
