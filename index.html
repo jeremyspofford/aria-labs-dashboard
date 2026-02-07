@@ -318,15 +318,21 @@
         /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.875rem;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        /* Metrics section gets 3-column max for better readability */
+        #metrics .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            max-width: 100%;
         }
         
         .stat-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 10px;
-            padding: 1rem;
+            padding: 1.25rem 1rem;
             text-align: center;
             box-shadow: 0 1px 3px var(--shadow);
             cursor: pointer;
@@ -361,7 +367,8 @@
         /* Charts */
         .charts-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            margin-top: 1.5rem;
             gap: 1rem;
         }
         
