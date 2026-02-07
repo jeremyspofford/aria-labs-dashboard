@@ -1178,22 +1178,22 @@
                     <div class="infra-subsection">
                         <h3 class="infra-subtitle">🤖 Agents</h3>
                         <div class="stats-grid">
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="showAgentModal('nova')" style="cursor: pointer;">
                                 <h4>⭐ Nova (Main)</h4>
                                 <div class="value">Claude Opus</div>
                                 <div class="subtext">Primary assistant • Complex tasks</div>
                             </div>
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="showAgentModal('product-owner')" style="cursor: pointer;">
                                 <h4>📋 Product Owner</h4>
                                 <div class="value">Claude Opus</div>
                                 <div class="subtext">Priorities • Specs • Task generation</div>
                             </div>
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="showAgentModal('architect')" style="cursor: pointer;">
                                 <h4>🏛️ Architect</h4>
                                 <div class="value">Claude Opus</div>
                                 <div class="subtext">System design • Technical decisions</div>
                             </div>
-                            <div class="stat-card">
+                            <div class="stat-card" onclick="showAgentModal('security')" style="cursor: pointer;">
                                 <h4>🔒 Security</h4>
                                 <div class="value">Claude Opus</div>
                                 <div class="subtext">Audits • Vulnerability review</div>
@@ -1414,6 +1414,92 @@
                 features: ['Flashcard mode', 'Timed match game', 'Photo upload', 'Deck organization', 'Spaced repetition']
             }
         };
+        
+        // Agent data for modals
+        const AGENT_DATA = {
+            'nova': {
+                title: '⭐ Nova (Main)',
+                model: 'Claude Opus 4.5',
+                provider: 'Anthropic',
+                role: 'Primary AI Assistant',
+                description: 'Nova is the main AI assistant powering Aria Labs. Handles direct conversations, complex reasoning, multi-step tasks, and coordinates with other agents.',
+                capabilities: ['Persistent memory', 'Tool use (browser, exec, files)', 'Multi-channel messaging', 'Proactive heartbeats', 'Cron scheduling'],
+                whenToUse: 'Direct conversations, complex problems, tasks requiring judgment and creativity.',
+                cost: '💰 Paid (Anthropic API)'
+            },
+            'product-owner': {
+                title: '📋 Product Owner',
+                model: 'Claude Opus 4.5',
+                provider: 'Anthropic',
+                role: 'Task & Priority Management',
+                description: 'Manages product backlog, writes detailed task specifications, prioritizes work, and ensures acceptance criteria are met.',
+                capabilities: ['Task breakdown', 'Spec writing', 'Priority assessment', 'Acceptance criteria', 'Sprint planning'],
+                whenToUse: 'Creating new tasks, refining requirements, planning sprints.',
+                cost: '💰 Paid (Anthropic API)'
+            },
+            'architect': {
+                title: '🏛️ Architect',
+                model: 'Claude Opus 4.5',
+                provider: 'Anthropic',
+                role: 'System Design & Technical Decisions',
+                description: 'Designs system architecture, makes technical decisions, reviews code structure, and ensures scalability.',
+                capabilities: ['System design', 'Tech stack decisions', 'Code review', 'Performance optimization', 'Security architecture'],
+                whenToUse: 'New projects, major refactors, technical decisions.',
+                cost: '💰 Paid (Anthropic API)'
+            },
+            'security': {
+                title: '🔒 Security Engineer',
+                model: 'Claude Opus 4.5',
+                provider: 'Anthropic',
+                role: 'Security Audits & Vulnerability Review',
+                description: 'Reviews code for security vulnerabilities, audits configurations, ensures secrets are protected, and recommends security best practices.',
+                capabilities: ['Code security review', 'Config audits', 'Secrets management', 'Vulnerability assessment', 'Security recommendations'],
+                whenToUse: 'Before deploys, when handling sensitive data, security reviews.',
+                cost: '💰 Paid (Anthropic API)'
+            }
+        };
+        
+        // Show agent details modal
+        function showAgentModal(agentId) {
+            const agent = AGENT_DATA[agentId];
+            if (!agent) return;
+            
+            const content = `
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <span class="detail-label">Model</span>
+                        <span class="detail-value">${agent.model}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Provider</span>
+                        <span class="detail-value">${agent.provider}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Role</span>
+                        <span class="detail-value">${agent.role}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Cost</span>
+                        <span class="detail-value">${agent.cost}</span>
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <p style="color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6;">${agent.description}</p>
+                    </div>
+                    <div>
+                        <span class="detail-label">Capabilities</span>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+                            ${agent.capabilities.map(c => `<span style="background: var(--bg-tertiary); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.75rem;">${c}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; margin-top: 0.5rem;">
+                        <span class="detail-label">When to Use</span>
+                        <p style="margin-top: 0.25rem; font-size: 0.875rem;">${agent.whenToUse}</p>
+                    </div>
+                </div>
+            `;
+            
+            showModal(agent.title, content);
+        }
         
         // Light theme only - no theme management needed
         
@@ -1942,14 +2028,21 @@
                 const subagentsGrid = document.getElementById('subagents-grid');
                 if (k.subagents && k.subagents.length > 0) {
                     subagentsGrid.innerHTML = k.subagents.map(s => `
-                        <div class="app-card" style="${s.status === 'active' ? 'border-color: var(--success);' : ''}">
+                        <div class="app-card" style="${s.status === 'active' ? 'border-left: 3px solid var(--success);' : 'border-left: 3px solid var(--warning);'}">
                             <h3>🤖 ${s.label} <span class="status ${s.status === 'active' ? 'live' : 'dev'}">${s.status}</span></h3>
-                            <p>${s.task}</p>
-                            ${s.spawned ? `<div class="meta" style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-secondary);">Spawned: ${new Date(s.spawned).toLocaleString()}</div>` : ''}
+                            <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0.5rem 0;">${s.task}</p>
+                            ${s.model ? `<div style="font-size: 0.75rem; margin-top: 0.5rem;"><strong>Model:</strong> ${s.model}</div>` : ''}
+                            ${s.progress ? `<div style="font-size: 0.75rem; margin-top: 0.25rem;"><strong>Progress:</strong> ${s.progress}</div>` : ''}
+                            ${s.spawned ? `<div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.5rem;">Started: ${new Date(s.spawned).toLocaleString()}</div>` : ''}
                         </div>
                     `).join('');
                 } else {
-                    subagentsGrid.innerHTML = '<div style="color: var(--text-secondary); font-size: 0.875rem; font-style: italic;">No active subagents</div>';
+                    subagentsGrid.innerHTML = `
+                        <div style="color: var(--text-secondary); font-size: 0.875rem; padding: 1.5rem; text-align: center; background: var(--bg-tertiary); border-radius: 8px;">
+                            <p style="margin-bottom: 0.5rem;">No active subagents</p>
+                            <p style="font-size: 0.75rem;">Subagents spawn for specific tasks (UX review, security audit, etc.) and report back when complete.</p>
+                        </div>
+                    `;
                 }
                 
                 // Recent Deploys - fetch from GitHub Actions
