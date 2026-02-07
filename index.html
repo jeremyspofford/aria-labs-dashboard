@@ -640,6 +640,7 @@
         
         .status-dot.online { background: var(--success); }
         .status-dot.offline { background: var(--error); }
+        .status-dot.warning { background: var(--warning); }
         
         /* Footer */
         footer {
@@ -653,6 +654,156 @@
         
         .loading { color: var(--text-secondary); font-style: italic; font-size: 0.875rem; }
         .error { color: var(--error); }
+        
+        /* Infrastructure Section */
+        .infra-subsection {
+            margin-bottom: 1.5rem;
+        }
+        
+        .infra-subtitle {
+            font-size: 0.9375rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        
+        .model-tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        
+        .tier-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+        
+        .tier-card:hover {
+            box-shadow: 0 4px 20px var(--shadow);
+            transform: translateY(-2px);
+        }
+        
+        .tier-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .tier-icon {
+            font-size: 1.25rem;
+        }
+        
+        .tier-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            flex: 1;
+        }
+        
+        .tier-cost {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+        }
+        
+        .tier-cost.free {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+        
+        .tier-cost.paid {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+        
+        .tier-models {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .model-tag {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            font-size: 0.6875rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+        
+        .model-tag.primary {
+            background: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+            color: white;
+        }
+        
+        .tier-use {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .tier-local { border-left: 3px solid #10B981; }
+        .tier-groq { border-left: 3px solid #F59E0B; }
+        .tier-google { border-left: 3px solid #3B82F6; }
+        .tier-paid { border-left: 3px solid #8B5CF6; }
+        
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.75rem;
+        }
+        
+        .guide-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.875rem;
+            text-align: center;
+        }
+        
+        .guide-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.375rem;
+        }
+        
+        .guide-card h4 {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .guide-card p {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        .alias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+        
+        .alias-item {
+            font-size: 0.8125rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        
+        .alias-item code {
+            font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+            background: var(--bg-tertiary);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            color: var(--accent);
+            font-size: 0.75rem;
+        }
         
         /* Mobile Responsive */
         @media (max-width: 900px) {
@@ -789,6 +940,9 @@
                     </a>
                     <a href="#repos" class="nav-link" data-section="repos">
                         <span class="icon">📁</span> Repositories
+                    </a>
+                    <a href="#infrastructure" class="nav-link" data-section="infrastructure">
+                        <span class="icon">🏗️</span> Infrastructure
                     </a>
                 </div>
                 
@@ -978,6 +1132,177 @@
                     <h2 class="section-header">📁 Repositories</h2>
                     <div class="repos-grid" id="repos-grid">
                         <div class="loading">Loading repos...</div>
+                    </div>
+                </section>
+                
+                <!-- Infrastructure Section -->
+                <section class="section" id="infrastructure">
+                    <h2 class="section-header">🏗️ Infrastructure</h2>
+                    
+                    <!-- Devices -->
+                    <div class="infra-subsection">
+                        <h3 class="infra-subtitle">💻 Devices</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>🥧 Pi Gateway</h4>
+                                <div class="value"><span class="status-dot online" id="pi-status"></span> <span id="pi-status-text">Online</span></div>
+                                <div class="subtext">Orchestration • Always-on</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>💻 Dell XPS 8950</h4>
+                                <div class="value"><span class="status-dot" id="dell-status"></span> <span id="dell-status-text">Checking...</span></div>
+                                <div class="subtext">Local LLM • 3060 Ti GPU</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Agents -->
+                    <div class="infra-subsection">
+                        <h3 class="infra-subtitle">🤖 Agents</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>⭐ Nova (Main)</h4>
+                                <div class="value">Claude Opus</div>
+                                <div class="subtext">Primary assistant • Complex tasks</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>📋 Product Owner</h4>
+                                <div class="value">Claude Opus</div>
+                                <div class="subtext">Priorities • Specs • Task generation</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>🏛️ Architect</h4>
+                                <div class="value">Claude Opus</div>
+                                <div class="subtext">System design • Technical decisions</div>
+                            </div>
+                            <div class="stat-card">
+                                <h4>🔒 Security</h4>
+                                <div class="value">Claude Opus</div>
+                                <div class="subtext">Audits • Vulnerability review</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Model Tiers -->
+                    <div class="infra-subsection">
+                        <h3 class="infra-subtitle">🧠 Model Tiers</h3>
+                        <div class="model-tiers">
+                            <div class="tier-card tier-local">
+                                <div class="tier-header">
+                                    <span class="tier-icon">🏠</span>
+                                    <span class="tier-name">Local (Dell Ollama)</span>
+                                    <span class="tier-cost free">🆓 Free</span>
+                                </div>
+                                <div class="tier-models">
+                                    <span class="model-tag">llama</span>
+                                    <span class="model-tag">qwen</span>
+                                    <span class="model-tag">mistral</span>
+                                    <span class="model-tag">deepseek</span>
+                                    <span class="model-tag">gemma-fast</span>
+                                </div>
+                                <div class="tier-use">Best for: Privacy-sensitive, high volume, experimentation</div>
+                            </div>
+                            
+                            <div class="tier-card tier-groq">
+                                <div class="tier-header">
+                                    <span class="tier-icon">⚡</span>
+                                    <span class="tier-name">Fast Cloud (Groq)</span>
+                                    <span class="tier-cost free">🆓 Free</span>
+                                </div>
+                                <div class="tier-models">
+                                    <span class="model-tag">groq-llama</span>
+                                    <span class="model-tag">groq-mixtral</span>
+                                    <span class="model-tag">groq-fast</span>
+                                    <span class="model-tag">groq-gemma</span>
+                                </div>
+                                <div class="tier-use">Best for: Quick responses, large context, free cloud</div>
+                            </div>
+                            
+                            <div class="tier-card tier-google">
+                                <div class="tier-header">
+                                    <span class="tier-icon">☁️</span>
+                                    <span class="tier-name">Google AI Studio</span>
+                                    <span class="tier-cost free">🆓 Free</span>
+                                </div>
+                                <div class="tier-models">
+                                    <span class="model-tag">gemini-studio</span>
+                                    <span class="model-tag">gemini-pro</span>
+                                    <span class="model-tag">gemini-flash-studio</span>
+                                </div>
+                                <div class="tier-use">Best for: Vision tasks, 1M+ token context</div>
+                            </div>
+                            
+                            <div class="tier-card tier-paid">
+                                <div class="tier-header">
+                                    <span class="tier-icon">💎</span>
+                                    <span class="tier-name">Premium Cloud</span>
+                                    <span class="tier-cost paid">💰 Paid</span>
+                                </div>
+                                <div class="tier-models">
+                                    <span class="model-tag primary">opus</span>
+                                    <span class="model-tag">sonnet</span>
+                                    <span class="model-tag">gpt</span>
+                                    <span class="model-tag">gemini</span>
+                                </div>
+                                <div class="tier-use">Best for: Complex reasoning, main assistant, production</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Model Selection Guide -->
+                    <div class="infra-subsection">
+                        <h3 class="infra-subtitle">📖 When to Use What</h3>
+                        <div class="guide-grid">
+                            <div class="guide-card">
+                                <div class="guide-icon">🔐</div>
+                                <h4>Privacy Required</h4>
+                                <p>Use <strong>Local</strong> models only</p>
+                            </div>
+                            <div class="guide-card">
+                                <div class="guide-icon">💸</div>
+                                <h4>Cost Optimization</h4>
+                                <p>Local → Groq → Google → Paid</p>
+                            </div>
+                            <div class="guide-card">
+                                <div class="guide-icon">🧩</div>
+                                <h4>Complex Tasks</h4>
+                                <p>Use <strong>Opus</strong> or <strong>GPT</strong></p>
+                            </div>
+                            <div class="guide-card">
+                                <div class="guide-icon">⚡</div>
+                                <h4>Speed Priority</h4>
+                                <p>Use <strong>Groq</strong> or <strong>gemma-fast</strong></p>
+                            </div>
+                            <div class="guide-card">
+                                <div class="guide-icon">👁️</div>
+                                <h4>Vision/Images</h4>
+                                <p>Use <strong>Gemini</strong> models</p>
+                            </div>
+                            <div class="guide-card">
+                                <div class="guide-icon">💻</div>
+                                <h4>Code Tasks</h4>
+                                <p>Use <strong>qwen-coder</strong> or <strong>deepseek-coder</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Model Aliases Reference -->
+                    <div class="infra-subsection">
+                        <h3 class="infra-subtitle">🏷️ Quick Aliases</h3>
+                        <div class="alias-grid">
+                            <div class="alias-item"><code>opus</code> → Claude Opus 4.5</div>
+                            <div class="alias-item"><code>sonnet</code> → Claude Sonnet 4.5</div>
+                            <div class="alias-item"><code>gpt</code> → GPT 5.2</div>
+                            <div class="alias-item"><code>gemini</code> → Gemini 3 Pro</div>
+                            <div class="alias-item"><code>llama</code> → Llama 3.1 8B (local)</div>
+                            <div class="alias-item"><code>qwen</code> → Qwen 3 8B (local)</div>
+                            <div class="alias-item"><code>mistral</code> → Mistral 7B (local)</div>
+                            <div class="alias-item"><code>deepseek</code> → DeepSeek R1 (local)</div>
+                            <div class="alias-item"><code>groq-llama</code> → Llama 70B (Groq)</div>
+                            <div class="alias-item"><code>groq-fast</code> → Llama 8B Instant</div>
+                            <div class="alias-item"><code>gemma-fast</code> → Gemma 1B (ultra fast)</div>
+                            <div class="alias-item"><code>qwen-coder</code> → Qwen Coder 7B</div>
+                        </div>
                     </div>
                 </section>
                 
@@ -1680,11 +2005,34 @@
             }
         }
         
+        // Check infrastructure status (Pi is always online since we're serving from it)
+        async function checkInfraStatus() {
+            // Pi is always online (we're running from it)
+            const piStatus = document.getElementById('pi-status');
+            const piText = document.getElementById('pi-status-text');
+            if (piStatus && piText) {
+                piStatus.className = 'status-dot online';
+                piText.textContent = 'Online';
+            }
+            
+            // Dell Ollama check - try to hit the API
+            // Note: This won't work from browser due to CORS, so we show as "Local Network"
+            const dellStatus = document.getElementById('dell-status');
+            const dellText = document.getElementById('dell-status-text');
+            if (dellStatus && dellText) {
+                // Can't check Ollama directly from browser (CORS), 
+                // so we show informational status
+                dellStatus.className = 'status-dot warning';
+                dellText.textContent = 'Local Network';
+            }
+        }
+        
         function loadAll() {
             loadMetrics();
             loadKanban();
             loadRepos();
             checkSiteStatus();
+            checkInfraStatus();
         }
         
         loadAll();
