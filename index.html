@@ -449,6 +449,24 @@
         .priority-high { color: var(--error); font-weight: 600; }
         .priority-normal { color: var(--text-secondary); }
         
+        /* Project Tags */
+        .tag-badge {
+            display: inline-block;
+            padding: 0.125rem 0.375rem;
+            border-radius: 0.25rem;
+            font-size: 0.625rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 0.375rem;
+        }
+        .tag-accountability { background: #dbeafe; color: #1e40af; }
+        .tag-portfolio { background: #dcfce7; color: #166534; }
+        .tag-nova-dashboard { background: #f3e8ff; color: #7c3aed; }
+        .tag-suppr { background: #fef3c7; color: #b45309; }
+        .tag-openclaw { background: #fee2e2; color: #991b1b; }
+        .tag-facedrill { background: #e0e7ff; color: #4338ca; }
+        
         /* Repos */
         .repos-grid {
             display: grid;
@@ -1139,7 +1157,13 @@
         
         function showTaskModal(task) {
             const content = `
-                <p style="font-weight: 600; margin-bottom: 1rem;">${task.task}</p>
+                <p style="font-weight: 600; margin-bottom: 1rem;">${task.task}${task.tag ? `<span class="tag-badge tag-${task.tag}" style="margin-left: 0.5rem;">${task.tag}</span>` : ''}</p>
+                ${task.tag ? `
+                <div class="detail-row">
+                    <span class="detail-label">Project</span>
+                    <span class="detail-value"><span class="tag-badge tag-${task.tag}">${task.tag}</span></span>
+                </div>
+                ` : ''}
                 ${task.assignee ? `
                 <div class="detail-row">
                     <span class="detail-label">Assignee</span>
@@ -1497,6 +1521,7 @@
                         url: t.metadata?.url,
                         steps: t.metadata?.steps,
                         acceptance_criteria: t.metadata?.acceptance_criteria,
+                        tag: t.metadata?.tag,
                         started: new Date(t.updated_at).toLocaleTimeString()
                     })),
                     upNext: tasks.filter(t => t.status === 'backlog').map(t => ({
@@ -1505,7 +1530,8 @@
                         assignee: t.assignee,
                         notes: t.description,
                         steps: t.metadata?.steps,
-                        acceptance_criteria: t.metadata?.acceptance_criteria
+                        acceptance_criteria: t.metadata?.acceptance_criteria,
+                        tag: t.metadata?.tag
                     })),
                     blocked: tasks.filter(t => t.status === 'blocked').map(t => ({
                         task: `${t.task_id}: ${t.title}`,
@@ -1513,12 +1539,14 @@
                         assignee: t.assignee,
                         notes: t.description,
                         steps: t.metadata?.steps,
-                        acceptance_criteria: t.metadata?.acceptance_criteria
+                        acceptance_criteria: t.metadata?.acceptance_criteria,
+                        tag: t.metadata?.tag
                     })),
                     doneToday: tasks.filter(t => t.status === 'done').map(t => ({
                         task: `${t.task_id}: ${t.title}`,
                         outcome: t.metadata?.outcome || '✅ Completed',
                         assignee: t.assignee,
+                        tag: t.metadata?.tag,
                         time: new Date(t.updated_at).toLocaleTimeString()
                     })),
                     subagents: [],
@@ -1532,7 +1560,7 @@
                 document.getElementById('inprogress-items').innerHTML = k.inProgress.length 
                     ? k.inProgress.map((t, i) => `
                         <div class="kanban-item in-progress" onclick='showTaskModal(${JSON.stringify(t).replace(/'/g, "\\'")})'>
-                            ${t.task}
+                            ${t.task}${t.tag ? `<span class="tag-badge tag-${t.tag}">${t.tag}</span>` : ''}
                             <div class="meta">👤 ${t.assignee || 'Unassigned'} • Started ${t.started || 'now'}</div>
                         </div>
                     `).join('')
@@ -1542,7 +1570,7 @@
                 document.getElementById('upnext-count').textContent = k.upNext.length;
                 document.getElementById('upnext-items').innerHTML = k.upNext.slice(0, 5).map((t, i) => `
                     <div class="kanban-item" onclick='showTaskModal(${JSON.stringify(t).replace(/'/g, "\\'")})'>
-                        ${t.task}
+                        ${t.task}${t.tag ? `<span class="tag-badge tag-${t.tag}">${t.tag}</span>` : ''}
                         <div class="meta">👤 ${t.assignee || 'Unassigned'} • <span class="priority-${t.priority}">${t.priority}</span></div>
                     </div>
                 `).join('') || '<div style="color: var(--text-secondary); font-size: 0.75rem;">Queue empty</div>';
@@ -1552,7 +1580,7 @@
                 document.getElementById('blocked-items').innerHTML = k.blocked?.length
                     ? k.blocked.map((t, i) => `
                         <div class="kanban-item" onclick='showTaskModal(${JSON.stringify(t).replace(/'/g, "\\'")})' style="border-left: 3px solid var(--error);">
-                            ${t.task}
+                            ${t.task}${t.tag ? `<span class="tag-badge tag-${t.tag}">${t.tag}</span>` : ''}
                             <div class="meta">👤 ${t.assignee || 'Unassigned'} • ⚠️ Blocked</div>
                         </div>
                     `).join('')
@@ -1562,7 +1590,7 @@
                 document.getElementById('done-count').textContent = k.doneToday.length;
                 document.getElementById('done-items').innerHTML = k.doneToday.slice(0, 5).map((t, i) => `
                     <div class="kanban-item done" onclick='showTaskModal(${JSON.stringify(t).replace(/'/g, "\\'")})'>
-                        ${t.task}
+                        ${t.task}${t.tag ? `<span class="tag-badge tag-${t.tag}">${t.tag}</span>` : ''}
                         <div class="meta">${t.outcome}</div>
                     </div>
                 `).join('') || '<div style="color: var(--text-secondary); font-size: 0.75rem;">Nothing yet</div>';
